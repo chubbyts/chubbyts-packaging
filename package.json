@@ -1,0 +1,27 @@
+{
+  "name": "@chubbyts/chubbyts-packaging",
+  "type": "module",
+  "version": "1.0.3",
+  "description": "Packaging helper",
+  "keywords": [
+    "chubbyts",
+    "packaging",
+    "helper"
+  ],
+  "author": "Dominik Zogg",
+  "license": "MIT",
+  "repository": "chubbyts/chubbyts-packaging",
+  "files": [
+    "rename-commonjs.js",
+    "tsconfig.cjs.json",
+    "tsconfig.esm.json",
+    "tsconfig.json",
+    "tsconfig.types.json"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
