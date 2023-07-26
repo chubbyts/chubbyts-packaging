@@ -36,7 +36,10 @@ getAllFiles(commonJsDistDir).map((file) => {
 
   writeFileSync(
     toPath,
-    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/require\("\.([^"]+)"\)/g, 'require(".$1.cjs")'),
+    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(
+      /require\("\.([^"]+)\.js"\)/g,
+      'require(".$1.cjs")',
+    ),
   );
 });
 
