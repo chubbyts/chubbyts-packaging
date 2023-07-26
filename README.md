@@ -13,7 +13,7 @@ Packaging helper
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-packaging][1].
 
 ```ts
-npm i -D @chubbyts-packaging@^2.0.2
+npm i -D @chubbyts-packaging@^2.0.3
 ```
 
 ### package.json
@@ -37,11 +37,11 @@ npm i -D @chubbyts-packaging@^2.0.2
 ### Symlinks
 
 ```sh
-ln -s node_modules/@chubbyts/chubbyts-packaging/build.js .
-ln -s node_modules/@chubbyts/chubbyts-packaging/tsconfig.cjs.json .
-ln -s node_modules/@chubbyts/chubbyts-packaging/tsconfig.esm.json .
-ln -s node_modules/@chubbyts/chubbyts-packaging/tsconfig.json .
-ln -s node_modules/@chubbyts/chubbyts-packaging/tsconfig.types.json .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/build.js .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.cjs.json .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.esm.json .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.json .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.types.json .
 ```
 
 ## Copyright

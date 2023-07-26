@@ -1,7 +1,6 @@
 import { execSync } from 'child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'fs';
 import { dirname, basename } from 'path';
-import { cwd } from 'process';
 
 const getAllFiles = (path) => {
   return readdirSync(path)
@@ -16,14 +15,13 @@ const getAllFiles = (path) => {
     .flat();
 };
 
-const rootDir = cwd();
-const distDir = rootDir + '/dist';
+const distDir = './dist';
 const commonJsDistDir = distDir + '/cjs';
 const ecmaScriptModuleDistDir = distDir + '/esm';
 
 rmSync(distDir, { recursive: true, force: true });
 
-execSync(`${rootDir}/node_modules/.bin/tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json`);
+execSync('./node_modules/.bin/tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json');
 
 getAllFiles(commonJsDistDir).map((file) => {
   const name = basename(file);
