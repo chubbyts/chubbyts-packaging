@@ -1,16 +1,18 @@
-import { readdirSync, renameSync, statSync, existsSync, mkdirSync, rmSync } from 'fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'fs';
 import { dirname, basename } from 'path';
 import { cwd } from 'process';
 
 const getAllFiles = (path) => {
-  return readdirSync(path).map((file) => {
-    const filePath = path + '/' + file;
-    if (statSync(filePath).isDirectory()) {
-      return getAllFiles(filePath);
-    }
+  return readdirSync(path)
+    .map((file) => {
+      const filePath = path + '/' + file;
+      if (statSync(filePath).isDirectory()) {
+        return getAllFiles(filePath);
+      }
 
-    return [filePath];
-  }).flat();
+      return [filePath];
+    })
+    .flat();
 };
 
 const distDir = cwd() + '/dist';
@@ -29,7 +31,13 @@ getAllFiles(commonJsDistDir).map((file) => {
     mkdirSync(toFolder, { recursive: true });
   }
 
-  renameSync(fromFolder + '/' + name, toFolder + '/' + name.replace(/\.js$/, '.cjs'));
+  const fromPath = fromFolder + '/' + name;
+  const toPath = toFolder + '/' + name.replace(/\.js$/, '.cjs');
+
+  writeFileSync(
+    toPath,
+    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/require\("\.([^"]+)"\)/g, 'require(".$1.cjs")'),
+  );
 });
 
 rmSync(commonJsDistDir, { recursive: true, force: true });

@@ -1,7 +1,7 @@
 {
   "name": "@chubbyts/chubbyts-packaging",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Packaging helper",
   "keywords": [
     "chubbyts",
@@ -11,6 +11,18 @@
   "author": "Dominik Zogg",
   "license": "MIT",
   "repository": "chubbyts/chubbyts-packaging",
+  "scripts": {
+    "cs-fix": "prettier --write rename-commonjs.js",
+    "cs": "prettier --check rename-commonjs.js",
+    "lint-fix": "eslint rename-commonjs.js --fix",
+    "lint": "eslint rename-commonjs.js"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
   "files": [
     "rename-commonjs.js",
     "tsconfig.cjs.json",
@@ -20,6 +32,10 @@
   ],
   "engines": {
     "node": ">=16"
+  },
+  "devDependencies": {
+    "@chubbyts/chubbyts-eslint": "^2.0.2",
+    "prettier": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
