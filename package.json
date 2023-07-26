@@ -1,7 +1,7 @@
 {
   "name": "@chubbyts/chubbyts-packaging",
   "type": "module",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Packaging helper",
   "keywords": [
     "chubbyts",
@@ -12,10 +12,10 @@
   "license": "MIT",
   "repository": "chubbyts/chubbyts-packaging",
   "scripts": {
-    "cs-fix": "prettier --write rename-commonjs.js",
-    "cs": "prettier --check rename-commonjs.js",
-    "lint-fix": "eslint rename-commonjs.js --fix",
-    "lint": "eslint rename-commonjs.js"
+    "cs-fix": "prettier --write build.js",
+    "cs": "prettier --check build.js",
+    "lint-fix": "eslint build.js --fix",
+    "lint": "eslint build.js"
   },
   "prettier": {
     "printWidth": 120,
@@ -24,7 +24,7 @@
     "trailingComma": "all"
   },
   "files": [
-    "rename-commonjs.js",
+    "build.js",
     "tsconfig.cjs.json",
     "tsconfig.esm.json",
     "tsconfig.json",
