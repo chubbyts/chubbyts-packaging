@@ -46,6 +46,6 @@ ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.types.json .
 
 ## Copyright
 
-2023 Dominik Zogg
+2024 Dominik Zogg
 
 [1]: https://www.npmjs.com/package/@chubbyts/chubbyts-packaging
