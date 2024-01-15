@@ -13,7 +13,7 @@ Packaging helper
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-packaging][1].
 
 ```ts
-npm i -D @chubbyts/chubbyts-packaging@^2.0.4
+npm i -D @chubbyts/chubbyts-packaging@^2.0.5
 ```
 
 ### package.json
