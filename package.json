@@ -1,7 +1,7 @@
 {
   "name": "@chubbyts/chubbyts-packaging",
   "type": "module",
-  "version": "2.0.7",
+  "version": "3.0.0",
   "description": "Packaging helper",
   "keywords": [
     "chubbyts",
@@ -12,10 +12,12 @@
   "license": "MIT",
   "repository": "chubbyts/chubbyts-packaging",
   "scripts": {
-    "cs-fix": "prettier --write build.js",
-    "cs": "prettier --check build.js",
-    "lint-fix": "eslint build.js --fix",
-    "lint": "eslint build.js"
+    "build": "tsx build.ts",
+    "cs-fix": "prettier --write src eslint.config.mjs",
+    "cs": "prettier --check src eslint.config.mjs",
+    "lint-fix": "eslint src eslint.config.mjs --fix",
+    "lint": "eslint src",
+    "prepare": "npm run build"
   },
   "prettier": {
     "printWidth": 120,
@@ -24,18 +26,26 @@
     "trailingComma": "all"
   },
   "files": [
-    "build.js",
-    "tsconfig.cjs.json",
-    "tsconfig.esm.json",
-    "tsconfig.json",
-    "tsconfig.types.json"
+    "dist",
+    "tsconfig.json"
   ],
+  "exports": {
+    "./*": {
+      "types": "./*.d.ts",
+      "require": "./*.cjs",
+      "import": "./*.mjs",
+      "default": "./*.mjs"
+    }
+  },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "devDependencies": {
-    "@chubbyts/chubbyts-eslint": "^2.0.7",
-    "prettier": "^3.2.5"
+    "@chubbyts/chubbyts-eslint": "^3.0.0",
+    "@types/node": "^22.10.5",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   },
   "publishConfig": {
     "access": "public"

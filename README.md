@@ -6,14 +6,14 @@ Packaging helper
 
 ## Requirements
 
- * node: 16
+ * node: 18
 
 ## Installation
 
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-packaging][1].
 
 ```ts
-npm i -D @chubbyts/chubbyts-packaging@^2.0.6
+npm i -D @chubbyts/chubbyts-packaging@^3.0.0
 ```
 
 ### package.json
@@ -21,7 +21,7 @@ npm i -D @chubbyts/chubbyts-packaging@^2.0.6
 ```json
   "type": "module",
   "scripts": {
-    "build": "node ./build.js",
+    "build": "node ./build.mjs",
     ...
   },
   "exports": {
@@ -37,15 +37,12 @@ npm i -D @chubbyts/chubbyts-packaging@^2.0.6
 ### Symlinks
 
 ```sh
-ln -sf node_modules/@chubbyts/chubbyts-packaging/build.js .
-ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.cjs.json .
-ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.esm.json .
+ln -sf node_modules/@chubbyts/chubbyts-packaging/dist/build.mjs .
 ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.json .
-ln -sf node_modules/@chubbyts/chubbyts-packaging/tsconfig.types.json .
 ```
 
 ## Copyright
 
-2024 Dominik Zogg
+2025 Dominik Zogg
 
 [1]: https://www.npmjs.com/package/@chubbyts/chubbyts-packaging
