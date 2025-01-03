@@ -49,7 +49,10 @@ getAllFiles(commonJsDistDir).map((file) => {
 
   writeFileSync(
     toPath,
-    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/require\("\.([^"]+)"\)/g, 'require(".$1.cjs")'),
+    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(
+      /require\("\.([^"]+?)(?<!\.cjs)"\)/g,
+      'require(".$1.cjs")',
+    ),
   );
 });
 
@@ -73,7 +76,7 @@ getAllFiles(moduleDistDir).map((file) => {
 
   writeFileSync(
     toPath,
-    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/from '\.([^']+)'/g, "from '.$1.mjs'"),
+    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/from '\.([^']+?)(?<!\.mjs)'/g, "from '.$1.mjs'"),
   );
 });
 

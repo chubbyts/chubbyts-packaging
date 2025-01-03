@@ -27,7 +27,7 @@ Packaging helper
 Through [NPM](https://www.npmjs.com) as [@chubbyts/chubbyts-packaging][1].
 
 ```ts
-npm i -D @chubbyts/chubbyts-packaging@^3.0.0
+npm i -D @chubbyts/chubbyts-packaging@^3.0.1
 ```
 
 ### package.json
