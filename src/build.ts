@@ -2,6 +2,16 @@ import { execSync } from 'child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'fs';
 import { dirname, basename } from 'path';
 
+const distDir = './dist';
+const commonJsDistDir = distDir + '/cjs';
+const moduleDistDir = distDir + '/esm';
+
+export const fixCommonjsRequirePaths = (code: string) =>
+  code.replace(/(?<=\brequire\(['"])(\.\.?\/[^'"]+?)(?:\.js|\.cjs)?(?=['"])/g, '$1.cjs');
+
+export const fixModuleImportPaths = (code: string) =>
+  code.replace(/(?<=\bimport(?:\s+.+?from\s+|(?:\s*\())['"])(\.\.?\/[^'"]+?)(?:\.js|\.mjs)?(?=['"])/g, '$1.mjs');
+
 const getAllFiles = (path: string): Array<string> => {
   return readdirSync(path)
     .map((file) => {
@@ -15,9 +25,47 @@ const getAllFiles = (path: string): Array<string> => {
     .flat();
 };
 
-const distDir = './dist';
-const commonJsDistDir = distDir + '/cjs';
-const moduleDistDir = distDir + '/esm';
+const renameAndMoveCommonJsFiles = () => {
+  getAllFiles(commonJsDistDir).map((file) => {
+    const name = basename(file);
+    const fromFolder = dirname(file);
+    const toFolder = distDir + fromFolder.substring(commonJsDistDir.length);
+
+    if (!name.match(/\.js$/)) {
+      return;
+    }
+
+    if (!existsSync(toFolder)) {
+      mkdirSync(toFolder, { recursive: true });
+    }
+
+    const fromPath = fromFolder + '/' + name;
+    const toPath = toFolder + '/' + name.replace(/\.js$/, '.cjs');
+
+    writeFileSync(toPath, fixCommonjsRequirePaths(readFileSync(fromPath, { encoding: 'utf8', flag: 'r' })));
+  });
+};
+
+const renameAndMoveModuleFiles = () => {
+  getAllFiles(moduleDistDir).map((file) => {
+    const name = basename(file);
+    const fromFolder = dirname(file);
+    const toFolder = distDir + fromFolder.substring(moduleDistDir.length);
+
+    if (!name.match(/\.js$/)) {
+      return;
+    }
+
+    if (!existsSync(toFolder)) {
+      mkdirSync(toFolder, { recursive: true });
+    }
+
+    const fromPath = fromFolder + '/' + name;
+    const toPath = toFolder + '/' + name.replace(/\.js$/, '.mjs');
+
+    writeFileSync(toPath, fixModuleImportPaths(readFileSync(fromPath, { encoding: 'utf8', flag: 'r' })));
+  });
+};
 
 rmSync(distDir, { recursive: true, force: true });
 
@@ -31,53 +79,8 @@ try {
   process.exit(1);
 }
 
-getAllFiles(commonJsDistDir).map((file) => {
-  const name = basename(file);
-  const fromFolder = dirname(file);
-  const toFolder = distDir + fromFolder.substring(commonJsDistDir.length);
-
-  if (!name.match(/\.js$/)) {
-    return;
-  }
-
-  if (!existsSync(toFolder)) {
-    mkdirSync(toFolder, { recursive: true });
-  }
-
-  const fromPath = fromFolder + '/' + name;
-  const toPath = toFolder + '/' + name.replace(/\.js$/, '.cjs');
-
-  writeFileSync(
-    toPath,
-    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(
-      /require\("\.([^"]+?)(?<!\.cjs)"\)/g,
-      'require(".$1.cjs")',
-    ),
-  );
-});
-
+renameAndMoveCommonJsFiles();
 rmSync(commonJsDistDir, { recursive: true, force: true });
 
-getAllFiles(moduleDistDir).map((file) => {
-  const name = basename(file);
-  const fromFolder = dirname(file);
-  const toFolder = distDir + fromFolder.substring(moduleDistDir.length);
-
-  if (!name.match(/\.js$/)) {
-    return;
-  }
-
-  if (!existsSync(toFolder)) {
-    mkdirSync(toFolder, { recursive: true });
-  }
-
-  const fromPath = fromFolder + '/' + name;
-  const toPath = toFolder + '/' + name.replace(/\.js$/, '.mjs');
-
-  writeFileSync(
-    toPath,
-    readFileSync(fromPath, { encoding: 'utf8', flag: 'r' }).replace(/from '\.([^']+?)(?<!\.mjs)'/g, "from '.$1.mjs'"),
-  );
-});
-
+renameAndMoveModuleFiles();
 rmSync(moduleDistDir, { recursive: true, force: true });
