@@ -21,6 +21,9 @@
 
 Packaging helper
 
+**Deprecated**:
+This package isn't supported anymore, i recommend to build esm only packages, so this is not needed anymore.
+
 ## Requirements
 
  * node: 18
